@@ -73,4 +73,4 @@ def essence_of(m)
 	rows.sort + cols.sort
 end
 
-p num_uniques(3, 3, 2)
+p num_uniques(2, 3, 4)

@@ -4,17 +4,15 @@ require 'matrix'
 def num_uniques(r, c, s)
 	uniques = Hash.new{|h, k| h[k] = []}
 	relevant_matrices = upper_right_triangle(r, c, s)
-	count = 0
 	relevant_matrices.each do |m|
 		uniques[essence_of(m)] << m
 	end
-	# uniques.each do |k, v|
-	# 	print k
-	# 	print ' => '
-	# 	print v
-	# 	puts
-	# end
-	# p count
+	uniques.each do |k, v|
+		print k
+		print ' => '
+		print v
+		puts
+	end
 	uniques.length
 end
 
@@ -155,4 +153,4 @@ def essence_of(m)
 end
 
 
-p upper_right_triangle(2, 3, 2)
+p num_uniques(3, 2, 2)
