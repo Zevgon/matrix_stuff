@@ -3,6 +3,7 @@ http://oeis.org/A038166 * Good
 * Good http://math.stackexchange.com/questions/22159/how-many-n-times-m-binary-matrices-are-there-up-to-row-and-column-permutation
 * Great http://oeis.org/A005748/a005748.pdf
 * OK https://oeis.org/A006003
+* Great http://www-cs-students.stanford.edu/~blynn//polya/cycleindex.html
 parity
 up to row and column permutation
 up to isomorphism (of a graph)

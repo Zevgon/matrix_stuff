@@ -1,3 +1,5 @@
+http://www-cs-students.stanford.edu/~blynn//polya/cycleindex.html
+
 from collections import Set
 
 def answer(r, c, s):

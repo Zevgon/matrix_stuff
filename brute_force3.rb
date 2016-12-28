@@ -29,6 +29,16 @@ def num_uniques(r, c, s)
 	uniques.length
 end
 
+def num_counts(m, s)
+	result = Array.new(s, 0)
+	m.flatten.each do |el|
+		result[el] += 1
+	end
+	result
+end
+
+# p num_counts([[1, 4, 3, 2], [4, 2, 1, 2], [2, 4, 2, 2], [4, 2, 2, 3]], 5)
+
 def create_all(r, c, s)
 	all_possible_ms(all_possible_rows(c, s), r)
 end
@@ -226,4 +236,4 @@ end
 # p reduce(m1, 2)
 # p reduce(m2, 2)
 
-p num_uniques(3, 3, 2)
+p num_uniques(4, 5, 2)
