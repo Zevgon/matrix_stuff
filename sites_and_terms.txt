@@ -4,6 +4,7 @@ http://oeis.org/A038166 * Good
 * Great http://oeis.org/A005748/a005748.pdf
 * OK https://oeis.org/A006003
 * Great http://www-cs-students.stanford.edu/~blynn//polya/cycleindex.html
+**** Exactly what I'm looking for http://math.stackexchange.com/questions/1941503/number-of-equivalence-classes-of-matrices-under-switching-rows-and-columns/1941637
 parity
 up to row and column permutation
 up to isomorphism (of a graph)
@@ -12,3 +13,30 @@ permutation groups
 group actions
 Polya enumeration
 bijective
+
+
+
+
+
+
+
+NOTE: In this answer, I give an explanation of how Burnside's Lemma can solve the question, but I do not arrive at any simplification. Hence, it may not be an ideal answer right now, but I expect some simplification is possible and maybe someone else can see where to go next. Anyway, I do the example of 2×22×2 matrices at the end.
+
+We may apply Burnside's Lemma. Let G=SR×SCG=SR×SC, where SkSk is the symmetric group. GG acts on the set XX of R×CR×C integer matrices where the entries are between 11 and nn, where SRSR permutes the rows and SCSC permutes the columns. The number of non-equivalent matrices (equivalence classes of matrices, rather) is equal to the number of distinct orbits of this group action.
+
+Burnside's Lemma gives us that this equals
+1 / |G| ∑g∈G |Xg| = 1 / R!C! * ∑σ∈SR ∑τ∈SC |X(σ,τ)|
+What is |X(σ,τ)||X(σ,τ)|? It is the number of matrices which are unchanged under applying permutation σσ to the rows and permutation ττ to the columns.
+
+Let's say σσ groups 1,2,3,…,R1,2,3,…,R into cycles of size c1,c2,…clc1,c2,…cl, with c1+c2+⋯+cl=Rc1+c2+⋯+cl=R, and similarly ττ groups 1,2,3,…,C1,2,3,…,C into cycles of size d1,d2,…,dmd1,d2,…,dm with d1+d2+⋯+dl=Cd1+d2+⋯+dl=C. Now the set of entries R×CR×C splits into lmlm blocks, where each block (i,j)(i,j) is the entries of cycle cici cross the entries of cycle djdj. This block (i,j)(i,j) has cidjcidj elements, and in the combined group action of (σ,τ)(σ,τ) that block splits into gcd(ci,dj)gcd(ci,dj) distinct cycles. All the elements of one of these cycles must be the same in the matrix. In total we have that
+|X(σ,τ)| = ∏i,j n^gcd(ci,dj)
+I suspect it can be further simplified, but I don't know how right now.
+
+Example: 2×22×2 matrices To check, let's do the example of 2×22×2 matrices. S2S2 has only two elements, which we call ee and ρρ (ρρ switches the two rows or columns, ee leaves them the same.) We have
+X(e,e)X(e,ρ)X(ρ,e)X(ρ,ρ)=∏i=12∏j=12ngcd(1,1)=n4=∏i=12ngcd(1,2)=n2=∏j=12ngcd(2,1)=n2=ngcd(2,2)=n2
+X(e,e)=∏i=12∏j=12ngcd(1,1)=n4X(e,ρ)=∏i=12ngcd(1,2)=n2X(ρ,e)=∏j=12ngcd(2,1)=n2X(ρ,ρ)=ngcd(2,2)=n2
+So our answer is
+14(n4+n2+n2+n2)=n4+3n24.
+14(n4+n2+n2+n2)=n4+3n24.
+For example, if n=1n=1 there is only one matrix, [1111][1111]. For n=2n=2, the above formula gives 16+124=716+124=7, so there are 77 matrices. Indeed, these are
+[1111],[2111],[2121],[2211],[2112],[2221],[2222].

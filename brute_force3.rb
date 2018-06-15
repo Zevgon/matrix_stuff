@@ -17,7 +17,10 @@ require 'matrix'
 def num_uniques(r, c, s)
 	uniques = Hash.new{|h, k| h[k] = []}
 	all_matrices = create_all(r, c, s)
-	all_matrices.each do |m|
+	all_matrices.each.with_index do |m, idx|
+		if (idx + 1) % 10000 == 0
+			p (idx + 1).to_s + '/' + all_matrices.length.to_s + ' matrices processed'
+		end
 		uniques[reduce(m, s)] << m
 	end
 	# uniques.each do |k, v|
@@ -40,7 +43,8 @@ end
 # p num_counts([[1, 4, 3, 2], [4, 2, 1, 2], [2, 4, 2, 2], [4, 2, 2, 3]], 5)
 
 def create_all(r, c, s)
-	all_possible_ms(all_possible_rows(c, s), r)
+	total_matrices_needed = s ** (r * c)
+	all_possible_ms(all_possible_rows(c, s), r, total_matrices_needed)
 end
 
 def all_possible_rows(c, s)
@@ -56,18 +60,23 @@ def all_possible_rows(c, s)
 	next_arr
 end
 
-def all_possible_ms(rows, num_rows)
+def all_possible_ms(rows, num_rows, total_matrices_needed)
+	# if num_rows == orig_num_rows
+	# end
+	# p matrix_count.to_s + '/' + total_matrices_needed.to_s + ' matrices created'
 	return [[]] if num_rows == 0
-	prev = all_possible_ms(rows, num_rows - 1)
+	prev = all_possible_ms(rows, num_rows - 1, total_matrices_needed)
 	next_arr = []
 	prev.each do |m|
 		rows.each do |row|
 			new_m = deep_dup(m)
 			new_m << row
 			next_arr << new_m
+			if next_arr.length % 10000 == 0
+				p next_arr.length.to_s + '/' + total_matrices_needed.to_s + ' matrices created'
+			end
 		end
 	end
-
 	next_arr
 end
 
@@ -236,4 +245,4 @@ end
 # p reduce(m1, 2)
 # p reduce(m2, 2)
 
-p num_uniques(4, 5, 2)
+p num_uniques(4, 4, 3)

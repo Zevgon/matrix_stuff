@@ -2,7 +2,7 @@
 #The five partitions of 4 are (4, 0, 0, 0), (2, 1, 0, 0), (0, 2, 0, 0), (0, 0, 0, 1), and (1, 0, 1, 0)
 #(4, 0, 0, 0) is read as "4 ones, zero twos, zero threes, and zero fours"
 #(2, 1, 0, 0) is read as "2 ones, 1 twos, zero threes, and zero fours"
-
+require 'set'
 
 class Fixnum
 	def !
@@ -18,6 +18,25 @@ class Fixnum
 		end
 		sum
 	end
+end
+
+def partitions_of(n)
+	return Set.new([[1]]) if n == 1
+	prev = partitions_of(n - 1)
+	new_arr = Set.new
+	prev.each do |part|
+		if part[0] > 0
+			duped = part.dup
+			duped << 0
+			duped[duped[0]] += 1
+			duped[0] = 0
+			new_arr << duped
+		end
+		part[0] += 1
+		part << 0
+		new_arr.add(part)
+	end
+	new_arr.to_a.sort_by{|el| el.join.reverse}
 end
 
 def denominator_part(partition, i)
@@ -46,14 +65,35 @@ def c_sub_j_of_pi(partition, j, m)
 	2 ** sum
 end
 
-partition = [1, 0, 1, 0]
-i = 1
-m = 4
+def symmetric_groups_of_c_sub_j_of_pis(n, m)
+	partitions = partitions_of(m)
+	result = []
+	partitions.each do |part|
+		result << single_group_of_c_sub_j_of_pis(part, n, m)
+	end
+	result
+end
+
+def single_group_of_c_sub_j_of_pis(partition, n, m)
+	result = []
+	partition.each.with_index do |summand, idx|
+		result << c_sub_j_of_pi(partition, idx + 1, m)
+	end
+	result
+end
+
+p symmetric_groups_of_c_sub_j_of_pis(4, 5)
+# p partitions_of(4)
+
+# partition = [1, 0, 1, 0]
+# i = 1
+# m = 4
 
 # p denominator(partition)
 # p c_sub_j_of_pi([0, 0, 1], 3, 3)
 
 def cycle_index_of_dihedral_permutation_group(num_sides, x)
+	#x is the number of colors
 	#Keys of perm_map are in the form of [num_cycles_in_perm, size_cycle_in_perm]
 	#If the items in a key don't multiply to num_sides, it's necessary later on to factor in the fact that there are num_sides - product remaining 1-cycles
 	perm_map = Hash.new(0)
@@ -96,4 +136,23 @@ def cycle_index_of_dihedral_permutation_group(num_sides, x)
 	answer / (num_sides * 2)
 end
 
-p cycle_reduced_dihedral_permutation_group(6, 3)
+# p cycle_index_of_dihedral_permutation_group(14, 2)
+
+def triangular_numbers(n)
+	result = [1]
+	idx = 2
+	until result.length == n
+		result << result[-1] + idx
+		idx += 1
+	end
+
+	result
+end
+
+# p partitions_of(4)
+
+# p add_seq(15)
+
+# require 'prime'
+# p Prime.methods - Object.methods
+# p Prime.entries(10)

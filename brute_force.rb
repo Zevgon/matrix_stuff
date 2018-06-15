@@ -128,4 +128,4 @@ end
 # p seq(70)
 
 
-p num_uniques(3, 3, 2)
+p num_uniques(3, 3, 3)
